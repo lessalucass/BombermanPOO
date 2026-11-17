@@ -101,25 +101,21 @@ public class Menu {
         System.out.println("B bomba | + fogo | * mais raio | & mais bombas | E saída");
         while (jogo.getEstado() == Jogo.EM_ANDAMENTO) {
             mostrarTela(jogo);
-            System.out.println("\nMenu:\n1- Movimentar\n2- Plantar Bomba\n3- Esperar\n4- Dica\n5- DEBUG\n6- Sair");
-            int op = lerNumero("Escolha uma opção: ");
+            System.out.println("\nMenu:\nMovimentar: W (cima), A (esquerda), S (baixo), D (direita)\n1- Plantar Bomba\n2- Esperar\n3- Dica\n4- DEBUG\n5- Sair");
+            System.out.print("Escolha uma opção: ");
+            String entrada = teclado.nextLine().trim().toUpperCase();
             try {
-                if (op == 1) {
-                    System.out.print("Qual a direção (W para Cima, S para Baixo, A para Esquerda, D para Direita)? ");
-                    String texto = teclado.nextLine().trim();
-                    if (texto.length() != 1) {
-                        throw new MovimentoInvalidoException("Digite só uma letra: W, A, S ou D.");
-                    }
-                    jogo.mover(texto.charAt(0));
-                } else if (op == 2) {
+                if (entrada.equals("W") || entrada.equals("A") || entrada.equals("S") || entrada.equals("D")) {
+                    jogo.mover(entrada.charAt(0));
+                } else if (entrada.equals("1")) {
                     jogo.plantarBomba();
-                } else if (op == 3) {
+                } else if (entrada.equals("2")) {
                     jogo.esperar();
-                } else if (op == 4) {
+                } else if (entrada.equals("3")) {
                     System.out.println(">> " + jogo.pedirDica());
-                } else if (op == 5) {
+                } else if (entrada.equals("4")) {
                     System.out.println("\n[DEBUG]\n" + jogo.desenharTabuleiro(true));
-                } else if (op == 6) {
+                } else if (entrada.equals("5")) {
                     System.out.println("Jogo encerrado.");
                     return;
                 } else {
@@ -129,7 +125,7 @@ public class Menu {
                 System.out.println("!! " + e.getMessage());
             } catch (LimiteDeBombaAtingidoException e) {
                 System.out.println("!! " + e.getMessage());
-            }
+        }
         }
         mostrarTela(jogo);
         if (jogo.getEstado() == Jogo.VITORIA) {
