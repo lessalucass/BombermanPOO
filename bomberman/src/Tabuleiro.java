@@ -272,7 +272,7 @@ public class Tabuleiro implements Serializable {
         }
     }
 
-    public String desenhar(boolean debug) {
+    public String desenhar() {
         StringBuilder sb = new StringBuilder("    ");
         for (int c = 0; c < tamanho; c++) {
             sb.append(String.format("%-3d", c));
@@ -281,14 +281,14 @@ public class Tabuleiro implements Serializable {
         for (int l = 0; l < tamanho; l++) {
             sb.append(String.format("%2d  ", l));
             for (int c = 0; c < tamanho; c++) {
-                sb.append(simboloDe(l, c, debug)).append("  ");
+                sb.append(simboloDe(l, c)).append("  ");
             }
             sb.append("\n");
         }
         return sb.toString();
     }
 
-    private char simboloDe(int l, int c, boolean debug) {
+    private char simboloDe(int l, int c) {
         if (fogo[l][c]) {
             return '+';
         }
@@ -304,12 +304,6 @@ public class Tabuleiro implements Serializable {
         }
         Obstaculo o = obstaculos[l][c];
         if (o != null) {
-            if (debug && o.explodeAoToque()) {
-                return 'T';
-            }
-            if (debug && itemEm(l, c) != null) {
-                return itemEm(l, c).simbolo();
-            }
             return o.simbolo();
         }
         if (itemEm(l, c) != null) {

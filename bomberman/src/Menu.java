@@ -101,7 +101,7 @@ public class Menu {
         System.out.println("B bomba | + fogo | * mais raio | & mais bombas | E saída");
         while (jogo.getEstado() == Jogo.EM_ANDAMENTO) {
             mostrarTela(jogo);
-            System.out.println("\nMenu:\nMovimentar: W (cima), A (esquerda), S (baixo), D (direita)\n1- Plantar Bomba\n2- Esperar\n3- Dica\n4- DEBUG\n5- Sair");
+            System.out.println("\nMenu:\nMovimentar: W (cima), A (esquerda), S (baixo), D (direita)\n1- Plantar Bomba\n2- Esperar\n3- Dica\n4- Sair");
             System.out.print("Escolha uma opção: ");
             String entrada = teclado.nextLine().trim().toUpperCase();
             try {
@@ -114,8 +114,6 @@ public class Menu {
                 } else if (entrada.equals("3")) {
                     System.out.println(">> " + jogo.pedirDica());
                 } else if (entrada.equals("4")) {
-                    System.out.println("\n[DEBUG]\n" + jogo.desenharTabuleiro(true));
-                } else if (entrada.equals("5")) {
                     System.out.println("Jogo encerrado.");
                     return;
                 } else {
@@ -140,7 +138,7 @@ public class Menu {
         for (String m : jogo.pegarMensagens()) {
             System.out.println(">> " + m);
         }
-        System.out.println(jogo.desenharTabuleiro(false));
+        System.out.println(jogo.desenharTabuleiro());
         System.out.println(jogo.status());
     }
 

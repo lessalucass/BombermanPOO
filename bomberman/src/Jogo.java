@@ -186,8 +186,8 @@ public class Jogo implements Serializable {
         mensagens.add("A fase foi reiniciada.");
     }
 
-    public String desenharTabuleiro(boolean debug) {
-        return tabuleiro.desenhar(debug);
+    public String desenharTabuleiro() {
+        return tabuleiro.desenhar();
     }
 
     public String status() {
