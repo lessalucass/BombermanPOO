@@ -1,0 +1,134 @@
+classDiagram
+    direction TB
+
+    class Destrutivel {
+        <<interface>>
+        +sofrerExplosao(Tabuleiro)
+    }
+    class Entidade {
+        <<abstract>>
+        #int linha
+        #int coluna
+        +getLinha() int
+        +getColuna() int
+        +setPosicao(int, int)
+        +simbolo() char*
+    }
+    class Obstaculo {
+        <<abstract>>
+        +bloqueiaFogo() boolean
+        +explodeAoToque() boolean
+    }
+    class Parede
+    class Caixote
+    class Armadilha {
+        -boolean pareceParede
+    }
+    class Jogador {
+        -int vidas
+        -int bombasSimultaneas
+        -int raioExplosao
+    }
+    class Inimigo {
+        <<abstract>>
+        +mover(Tabuleiro, int)*
+        #podeEntrar(Tabuleiro, int, int) boolean
+        #andar(Tabuleiro, int, int) boolean
+        #andarAleatorio(Tabuleiro)
+    }
+    class InimigoComum
+    class InimigoRastreador
+    class InimigoSabotador {
+        -esconderArmadilha(Tabuleiro)
+    }
+    class Bomba {
+        -int restante
+        -int raio
+        +passarTurno()
+        +desarmavel() boolean
+    }
+    class Item {
+        -int tipo
+        +getTipo() int
+    }
+    class Tabuleiro {
+        -Obstaculo[][] obstaculos
+        -boolean[][] fogo
+        -ArrayList~Inimigo~ inimigos
+        -ArrayList~Bomba~ bombas
+        -ArrayList~Item~ itens
+        +detonar(int, int, int)
+        +passarTurnoDasBombas()
+        +desenhar(boolean) String
+    }
+    class Jogo {
+        -String nome
+        -int dificuldade
+        -int turno
+        -int dicasUsadas
+        -int estado
+        +mover(char)
+        +plantarBomba()
+        +esperar()
+        +pedirDica() String
+        -avancarTurno()
+    }
+    class GeradorFase {
+        +criarGrade() char[][]
+        +preencher(char[][], int) ArrayList~Item~
+    }
+    class Arquivos {
+        +salvar(Jogo, String)
+        +carregar(String) Jogo
+    }
+    class Sorteio {
+        +entre(int) int
+        +chance(int) boolean
+    }
+    class Menu {
+        -Scanner teclado
+        +iniciar()
+    }
+    class Main
+    class MovimentoInvalidoException
+    class LimiteDeBombaAtingidoException
+    class ArquivoJogoException
+
+    Entidade <|-- Obstaculo
+    Entidade <|-- Jogador
+    Entidade <|-- Inimigo
+    Entidade <|-- Bomba
+    Entidade <|-- Item
+    Obstaculo <|-- Parede
+    Obstaculo <|-- Caixote
+    Obstaculo <|-- Armadilha
+    Inimigo <|-- InimigoComum
+    Inimigo <|-- InimigoRastreador
+    Inimigo <|-- InimigoSabotador
+
+    Destrutivel <|.. Obstaculo
+    Destrutivel <|.. Jogador
+    Destrutivel <|.. Inimigo
+
+    Tabuleiro "1" *-- "1" Jogador
+    Tabuleiro "1" *-- "*" Inimigo
+    Tabuleiro "1" *-- "*" Bomba
+    Tabuleiro "1" *-- "*" Item
+    Tabuleiro "1" *-- "*" Obstaculo
+    Jogo "1" *-- "1" Tabuleiro
+    Tabuleiro ..> Destrutivel : explosão
+    InimigoSabotador ..> Armadilha : cria
+    InimigoSabotador ..> Bomba : desarma
+    Jogo ..> GeradorFase : usa
+    Inimigo ..> Sorteio : usa
+    GeradorFase ..> Sorteio : usa
+    Menu --> Jogo
+    Menu ..> Arquivos : salvar e carregar
+    Main ..> Menu
+
+    Exception <|-- MovimentoInvalidoException
+    Exception <|-- LimiteDeBombaAtingidoException
+    Exception <|-- ArquivoJogoException
+    Jogo ..> MovimentoInvalidoException : lança
+    Jogo ..> LimiteDeBombaAtingidoException : lança
+    Arquivos ..> ArquivoJogoException : lança

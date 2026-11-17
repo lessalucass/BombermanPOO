@@ -1,0 +1,14 @@
+IntelliJ:
+  1. Extraia o zip.
+  2. File > Open e escolha a pasta "bomberman" (a que contém a pasta src).
+  3. Se o IntelliJ pedir, escolha um JDK em File > Project Structure > Project > SDK.
+  4. Abra src/Main.java e clique no triângulo verde ao lado de main.
+
+Se não abrir como projeto: crie um projeto Java novo e copie os arquivos de src
+para a pasta src do projeto.
+
+Pelo terminal (na pasta raiz):
+  javac -d out src/*.java
+  java -cp out Main
+
+O mapa 20x20 é sorteado a cada jogo. Os jogos salvos ficam na pasta do projeto (.sav).
