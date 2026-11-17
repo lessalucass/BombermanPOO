@@ -14,6 +14,6 @@ public class Parede extends Obstaculo {
 
     @Override
     public char simbolo() {
-        return 'X';
+        return '█';
     }
 }
